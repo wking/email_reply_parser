@@ -1,0 +1,19 @@
+On Mon, Dec 31, 2012 at 12:22:45PM -0800, Mislav Marohnić wrote:
+> Why doesn't the `--author` flag for `git commit` have effect?
+
+Because it doesn't set the committer.
+
+> You shouldn't be required to set name/email with `git config` in tests.
+
+My default username is extracted from the comment field in my
+/etc/passwd entry (via getpwuid() and pw_gecos [1]).  On my personal
+laptop, I didn't set gecos comment, so there's no name for Git to fall
+back on.
+
+On Mon, Dec 31, 2012 at 12:23:54PM -0800, Mislav Marohnić wrote:
+> Oh I see your git version. Maybe update to the newest patch release?
+
+Git's identity detection logic hasn't changed recently.
+
+[1]: See ident_default_name() from ident.c and xgetpwuid_self() in
+wrapper.c in the Git source

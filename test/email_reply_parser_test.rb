@@ -175,6 +175,21 @@ I am currently using the Java HTTP API.\n", reply.fragments[0].to_s
     assert_equal EmailReplyParser.read(body).visible_text, EmailReplyParser.parse_reply(body)
   end
 
+  def test_interleaved_reply
+    reply = email(:email_interleaved_reply)
+    assert_equal 6, reply.fragments.size
+    assert_match /^On Mon, Dec 31, 2012 at 12:22:45PM/, reply.fragments[0].to_s
+    assert_match /^Because/, reply.fragments[1].to_s
+    assert_match /^> You/, reply.fragments[2].to_s
+    assert_match /^My default/, reply.fragments[3].to_s
+    assert_match /^On Mon, Dec 31, 2012 at 12:23:54PM/, reply.fragments[4].to_s
+    assert_match /^Git/, reply.fragments[5].to_s
+    assert_equal [true, false, true, false, true, false],
+      reply.fragments.map { |f| f.quoted? }
+    assert reply.fragments.none? { |f| f.hidden? }
+    assert reply.fragments.none? { |f| f.signature? }
+  end
+
   def test_one_is_not_on
     reply = email("email_one_is_not_on")
     assert_match /One outstanding question/, reply.fragments[0].to_s
