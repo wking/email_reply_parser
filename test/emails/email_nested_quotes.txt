@@ -1,0 +1,9 @@
+On Mon, Jan 28, 2013 at 12:11:00PM -0500, W. Trevor King wrote:
+> On Sun, Jan 27, 2013 at 03:18:20PM -0800, Greg Wilson wrote:
+> > Can we ask people "do you have an editor?"  And somehow ask them to
+> > launch it and save a file in their home directory, so that we know they
+> > can do that?
+>
+> … I'll stub something like this out for further discussion.
+
+There's something like this in e0182078df5409362b164dc4987c303426d5e5bd.

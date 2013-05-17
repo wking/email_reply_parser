@@ -190,6 +190,17 @@ I am currently using the Java HTTP API.\n", reply.fragments[0].to_s
     assert reply.fragments.none? { |f| f.signature? }
   end
 
+  def test_nested_quotes
+    reply = email(:email_nested_quotes)
+    assert_equal 2, reply.fragments.size
+    assert_match /^On Mon, Jan 28/, reply.fragments[0].to_s
+    assert_match /^There/, reply.fragments[1].to_s
+    assert_equal [true, false],
+      reply.fragments.map { |f| f.quoted? }
+    assert reply.fragments.none? { |f| f.hidden? }
+    assert reply.fragments.none? { |f| f.signature? }
+  end
+
   def test_one_is_not_on
     reply = email("email_one_is_not_on")
     assert_match /One outstanding question/, reply.fragments[0].to_s
