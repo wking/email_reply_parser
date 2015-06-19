@@ -201,6 +201,17 @@ I am currently using the Java HTTP API.\n", reply.fragments[0].to_s
     assert reply.fragments.none? { |f| f.signature? }
   end
 
+  def test_quote_and_text_with_indented_blocks
+    reply = email(:email_quote_and_text_with_indented_blocks)
+    assert_equal 2, reply.fragments.size
+    assert_match /^On Thu, Jun 18/, reply.fragments[0].to_s
+    assert_match /^I think it would/, reply.fragments[1].to_s
+    assert_equal [true, false],
+      reply.fragments.map { |f| f.quoted? }
+    assert reply.fragments.none? { |f| f.hidden? }
+    assert reply.fragments.none? { |f| f.signature? }
+  end
+
   def test_one_is_not_on
     reply = email("email_one_is_not_on")
     assert_match /One outstanding question/, reply.fragments[0].to_s
